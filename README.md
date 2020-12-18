@@ -18,3 +18,5 @@ Features:
 4.   Alerting the users about gas leakage or fire accidents if any.
 
 5.   Controlling home appliances through mobile application. 
+
+![Smart Supervisor](https://user-images.githubusercontent.com/75872316/102654922-6a0c7300-4197-11eb-9035-f65822252c59.png)
