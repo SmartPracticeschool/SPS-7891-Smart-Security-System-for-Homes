@@ -1,6 +1,6 @@
 # Smart-Security-System-For-Homes
 
-Category: Internet Of Things
+**Category** : Internet Of Things
 
 Skills Required:
 Python, Python For Data Visualization, IOT Open Hardware Platforms, IOT Application Development, IOT Cloud Platform, IOT Communication Technologies, IOT Communication Protocols
@@ -21,4 +21,4 @@ Python, Python For Data Visualization, IOT Open Hardware Platforms, IOT Applicat
 
 ![Smart Supervisor](https://user-images.githubusercontent.com/75872316/102654922-6a0c7300-4197-11eb-9035-f65822252c59.png)
 
-Visit Cerificate from SmartBridge - IBM : <a href = "https://smartinternz.com/badge_projects/certificates/0deb1c54814305ca9ad266f53bc82511"> Click Here</a>
+To Visit Cerificate from SmartBridge - IBM, <a href = "https://smartinternz.com/badge_projects/certificates/0deb1c54814305ca9ad266f53bc82511"> Click Here</a>
