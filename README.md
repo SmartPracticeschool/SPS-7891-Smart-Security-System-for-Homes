@@ -1,4 +1,4 @@
-# Smart-Security-System-For-Homes
+# Smart Security System For Homes
 
 ![Smart Supervisor](https://user-images.githubusercontent.com/75872316/102654922-6a0c7300-4197-11eb-9035-f65822252c59.png)
 
