@@ -7,14 +7,13 @@ import cv2
 # import dht11
 import numpy as np
 import sys
-import ibmiotf.application
+# import ibmiotf.application
 import ibmiotf.device
-import random
+# import random
 import time
-
 from cloudant.client import Cloudant
-from cloudant.error import CloudantException
-from cloudant.result import Result, ResultByKey
+# from cloudant.error import CloudantException
+# from cloudant.result import Result, ResultByKey
 
 # Provide your IBM Watson Device Credentials
 organization = "7vkdvg"
@@ -22,7 +21,6 @@ deviceType = "nodemcu"
 deviceId = "1234"
 authMethod = "token"
 authToken = "qkeeBMPtqL3kaN1WLs"
-
 
 def myCommandCallback(cmd):
     print("Command received: %s" % cmd.data)
@@ -42,15 +40,14 @@ def myCommandCallback(cmd):
 
     if (cmd.data['command'] == "fanon"):
         print("fan on")
+
     if (cmd.data['command'] == "fanoff"):
         print("fan off")
-
 
 try:
     deviceOptions = {"org": organization, "type": deviceType, "id": deviceId, "auth-method": authMethod,
                      "auth-token": authToken}
     deviceCli = ibmiotf.device.Client(deviceOptions)
-# ..............................................
 
 except Exception as e:
     print("Caught exception connecting device: %s" % str(e))
@@ -61,29 +58,29 @@ deviceCli.connect()
 face_classifier = cv2.CascadeClassifier("haar-cascade-frontal-face.xml")
 # eye_classifier=cv2.CascadeClassifier("haarcascade_eye.xml")
 
-# It will read the first frame/image of the video
+# will read the first frame/image of the video
 video = cv2.VideoCapture('head-pose-face-detection-male.mp4')
 
-COS_ENDPOINT = "https://s3.jp-tok.cloud-object-storage.appdomain.cloud"  # Current list avaiable at https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints
-COS_API_KEY_ID = "EazMhT8JAJIHtQQ6Y6bX2V719YdNFohRJeHpmmQ2YyxA"  # eg "W00YiRnLW4a3fTjMB-oiB-2ySfTrFBIQQWanc--P3byk"
+COS_ENDPOINT = "https://s3.jp-tok.cloud-object-storage.appdomain.cloud"  # Current list avaiable at "https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints"
+COS_API_KEY_ID = "EazMhT8JAJIHtQQ6Y6bX2V719YdNFohRJeHpmmQ2YyxA"          # eg "W00YiRnLW4a3fTjMB-oiB-2ySfTrFBIQQWanc--P3byk"
 COS_AUTH_ENDPOINT = "https://iam.cloud.ibm.com/identity/token"
 COS_RESOURCE_CRN = "crn:v1:bluemix:public:cloud-object-storage:global:a/8aeedb68b1c44621a64aaf4bc15c599c:80773136-4bd3-4d7f-ad1d-172e55a6d8fc::"
 
 client = Cloudant("4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix",
                   "beb97b02edc17259ec590cae582aa704627b33dd5166579b7f182ae2d71353a5",
-                  url="https://4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix:beb97b02edc17259ec590cae582aa704627b33dd5166579b7f182ae2d71353a5@4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix.cloudantnosqldb.appdomain.cloud")
+                  url = "https://4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix:beb97b02edc17259ec590cae582aa704627b33dd5166579b7f182ae2d71353a5@4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix.cloudantnosqldb.appdomain.cloud"
+                  )
 client.connect()
 database_name = "worker_details"
 
 # Create resource
 cos = ibm_boto3.resource("s3",
-                         ibm_api_key_id=COS_API_KEY_ID,
-                         ibm_service_instance_id=COS_RESOURCE_CRN,
-                         ibm_auth_endpoint=COS_AUTH_ENDPOINT,
-                         config=Config(signature_version="oauth"),
-                         endpoint_url=COS_ENDPOINT
+                         ibm_api_key_id = COS_API_KEY_ID,
+                         ibm_service_instance_id = COS_RESOURCE_CRN,
+                         ibm_auth_endpoint = COS_AUTH_ENDPOINT,
+                         config = Config(signature_version="oauth"),
+                         endpoint_url = COS_ENDPOINT
                          )
-
 
 def multi_part_upload(bucket_name, item_name, file_path):
     try:
@@ -96,8 +93,8 @@ def multi_part_upload(bucket_name, item_name, file_path):
 
         # set the transfer threshold and chunk size
         transfer_config = ibm_boto3.s3.transfer.TransferConfig(
-            multipart_threshold=file_threshold,
-            multipart_chunksize=part_size
+            multipart_threshold = file_threshold,
+            multipart_chunksize = part_size
         )
 
         # the upload_fileobj method will automatically execute a multi-part upload
@@ -114,7 +111,6 @@ def multi_part_upload(bucket_name, item_name, file_path):
     except Exception as e:
         print("Unable to complete multi-part upload: {0}".format(e))
 
-
 while True:
     # capture the first frame
     check, frame = video.read()
@@ -122,7 +118,7 @@ while True:
 
     # detect the faces from the video using detectMultiScale function
     faces = face_classifier.detectMultiScale(gray, 1.3, 5)
-    # eyes=eye_classifier.detectMultiScale(gray,1.3,5)
+    # eyes = eye_classifier.detectMultiScale(gray, 1.3, 5)
 
     # drawing rectangle boundries for the detected face
     for (x, y, w, h) in faces:
@@ -149,24 +145,25 @@ while True:
         h = 45
         data = {"d": {'temperature': t, 'humidity': h, 'person': person}}
 
-
         # print data
         def myOnPublishCallback():
             print("Published data to IBM Watson")
 
-
-        success = deviceCli.publishEvent("Data", "json", data, qos=0, on_publish=myOnPublishCallback)
+        success = deviceCli.publishEvent("Data", "json", data, qos = 0, on_publish = myOnPublishCallback)
         if not success:
             print("Not connected to IoTF")
         time.sleep(1)
         deviceCli.commandCallback = myCommandCallback
         person = 0
+
         # waitKey(1)- for every 1 millisecond new frame will be captured
         Key = cv2.waitKey(1)
+
         if Key == ord('q'):
             # release the camera
             video.release()
             # destroy all windows
             cv2.destroyAllWindows()
             break
+
 deviceCli.disconnect()
