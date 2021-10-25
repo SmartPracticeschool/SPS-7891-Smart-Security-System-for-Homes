@@ -2,17 +2,17 @@
 
 import datetime
 import ibm_boto3
+# import dht11
 from ibm_botocore.client import Config, ClientError
 import cv2
-# import dht11
-import numpy as np
-import sys
-# import ibmiotf.application
-import ibmiotf.device
 # import random
+import ibmiotf.device
+import numpy as np
+# import ibmiotf.application
+import sys
 import time
-from cloudant.client import Cloudant
 # from cloudant.error import CloudantException
+from cloudant.client import Cloudant
 # from cloudant.result import Result, ResultByKey
 
 # Provide your IBM Watson Device Credentials
