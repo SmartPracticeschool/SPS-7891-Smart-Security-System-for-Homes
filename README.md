@@ -53,40 +53,55 @@ import time
 # Python Client for IBM Cloud database service
 from cloudant.client import Cloudant
 ```
+## 💻 Web Preview
+
+<p align="left">
+    <img style="margin: 0 0 0 40px" src="assets/images/web-app.jpg" alt="web application"/>
+</p>
 
 ## 👨‍💻 Backend Setup
 
 ```py
 # Provide your IBM Watson Device Credentials
-organization = "7vkdvg"
-deviceType = "nodemcu"
-deviceId = "1234"
-authMethod = "token"
-authToken = "qkeeBMPtqL3kaN1WLs"
+device_options = {"org": organization,
+                  "type": device_type,
+                  "id": device_id,
+                  "auth-method": auth_method,
+                  "auth-token": auth_token
+                  }
 ```
 
 ```py
-COS_ENDPOINT = "https://s3.jp-tok.cloud-object-storage.appdomain.cloud"  # Current list avaiable at "https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints"
-COS_API_KEY_ID = "EazMhT8JAJIHtQQ6Y6bX2V719YdNFohRJeHpmmQ2YyxA"          # eg "W00YiRnLW4a3fTjMB-oiB-2ySfTrFBIQQWanc--P3byk"
-COS_AUTH_ENDPOINT = "https://iam.cloud.ibm.com/identity/token"
-COS_RESOURCE_CRN = "crn:v1:bluemix:public:cloud-object-storage:global:a/8aeedb68b1c44621a64aaf4bc15c599c:80773136-4bd3-4d7f-ad1d-172e55a6d8fc::"
+load_dotenv()
+    DEVICE_TYPE = os.environ['device_type']
+    DEVICE_ID = os.environ['device_id']
+   
+    AUTH_TOKEN = os.environ['auth_token']
+    AUTH_METHOD = os.environ['auth_method']
+    ORGANIZATION = os.environ['organization']
 
-client = Cloudant("4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix",
-                  "beb97b02edc17259ec590cae582aa704627b33dd5166579b7f182ae2d71353a5",
-                  url = "https://4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix:beb97b02edc17259ec590cae582aa704627b33dd5166579b7f182ae2d71353a5@4c69b596-b182-4d82-b9ec-cacab08c055f-bluemix.cloudantnosqldb.appdomain.cloud"
-                  )
-client.connect()
+    # Current list available at "https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints"
+    COS_ENDPOINT = os.environ['cos_endpoint']
+    COS_API_KEY_ID = os.environ['cos_api_key_id']   # eg "W00YiRnLW4a3fTjMB-oiB-2ySfTrFBIQQWanc--P3byk"
+    COS_AUTH_ENDPOINT = os.environ['cos_auth_endpoint']
+    COS_RESOURCE_CRN = os.environ['cos_resource_crn']
 
-database_name = "worker_details"
+    video = cv2.VideoCapture(config['video_path'])
+    face_classifier = cv2.CascadeClassifier(config['model_path'])
+    
+    client, device_cli = get_connections(ORGANIZATION, DEVICE_TYPE, DEVICE_ID, AUTH_METHOD,  AUTH_TOKEN)
 
-# Create resource
-cos = ibm_boto3.resource("s3",
-                         ibm_api_key_id = COS_API_KEY_ID,
-                         ibm_service_instance_id = COS_RESOURCE_CRN,
-                         ibm_auth_endpoint = COS_AUTH_ENDPOINT,
-                         config = Config(signature_version="oauth"),
-                         endpoint_url = COS_ENDPOINT
-                         )
+    client.connect()
+    device_cli.connect()
+
+    # Create resource
+    cos = ibm_boto3.resource("s3",
+                             ibm_api_key_id=COS_API_KEY_ID,
+                             ibm_service_instance_id=COS_RESOURCE_CRN,
+                             ibm_auth_endpoint=COS_AUTH_ENDPOINT,
+                             config=Config(signature_version="oauth"),
+                             endpoint_url=COS_ENDPOINT
+                             )
 ```
 
 <h2 align="left" style="font-weight:bold">🌈 Contributors</h2>
