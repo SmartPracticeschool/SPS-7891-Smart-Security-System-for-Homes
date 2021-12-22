@@ -55,9 +55,7 @@ from cloudant.client import Cloudant
 ```
 ## 💻 Web Preview
 
-<p align="left">
-    <img style="margin: 0 0 0 40px" src="assets/images/web-app.jpg" alt="web application"/>
-</p>
+https://user-images.githubusercontent.com/75872316/147149737-ae534151-03c6-458d-8b33-548ef0c6aab4.mp4
 
 ## 👨‍💻 Backend Setup
 
