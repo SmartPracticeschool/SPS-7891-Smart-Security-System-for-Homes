@@ -142,3 +142,5 @@ The MIT AI2 Companion is not a stand-alone application. It is intended to be use
 <br />
 
 ## IV. CONCLUSION
+
+A prototype of the system was made and tested as shown in the video. This security system works accurately and efficiently on every aspect of the functioning. Since, IBM Watson Services are paid, I made this prototype while working with free-tier account for a month.
